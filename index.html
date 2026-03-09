@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 33rd Birthday 💜</title>
+  <meta name="description" content="A cinematic birthday celebration through the stars">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Three.js Galaxy (fixed, always behind) -->
+  <div id="galaxy-canvas"></div>
+  <div id="nebula-overlay"></div>
+  <div id="vignette"></div>
+  <div id="shooting-stars"></div>
+
+  <!-- Global Burst FX -->
+  <div id="burst-overlay"></div>
+  <div id="burst-ring"></div>
+  <div id="lens-flare">
+    <div class="flare-streak horizontal"></div>
+    <div class="flare-streak vertical"></div>
+    <div class="flare-core"></div>
+  </div>
+
+  <!-- Black veil for warp→scene2 transition -->
+  <div id="black-veil"></div>
+
+  <!-- ══════════════════════ SCENE 1 ══════════════════════ -->
+  <section id="scene-1">
+    <div class="scene-content">
+      <p id="text-line-1" class="reveal-text">"Some birthdays are special…"</p>
+      <div id="orbit-ring"></div>
+      <p id="text-line-2" class="reveal-text">"But some stories are even more special."</p>
+      <div id="number-display">
+        <canvas id="formation-canvas"></canvas>
+        <div id="number-33-glow"></div>
+        <div id="shockwave"></div>
+        <div id="sparkle-ring"></div>
+        <span id="number-33">33</span>
+      </div>
+      <p id="text-line-3" class="reveal-text sub-text">"Today we celebrate together"</p>
+    </div>
+    <div id="scroll-indicator">
+      <span>Begin the journey</span>
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path d="M12 4L12 20M5 13L12 20L19 13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </div>
+    <button class="recap-btn" data-scene="1" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ══════════════════════ WARP ZONE ══════════════════════ -->
+  <div id="warp-zone"></div>
+
+  <!-- ══════════════════════ SCENE 2 — Bharathi Akka 💜 ══════════════════════ -->
+  <section id="scene-2">
+    <canvas id="celebration-canvas"></canvas>
+    <div id="scene2-spark"></div>
+    <div id="s2-ring-1" class="s2-ring"></div>
+    <div id="s2-ring-2" class="s2-ring"></div>
+    <div id="s2-ring-3" class="s2-ring"></div>
+
+    <!-- Floating emoji particles -->
+    <div id="s2-emoji-layer" aria-hidden="true"></div>
+
+    <div id="scene-2-content">
+
+      <!-- Top label -->
+      <p id="s2-today-label">✨ Today is Your Day ✨</p>
+
+      <!-- Happy Birthday -->
+      <p id="s2-happy-bday">Happy Birthday</p>
+
+      <!-- Name with orbit -->
+      <div id="s2-name-wrapper">
+        <h1 id="s2-name">BHARATHI AKKA 💜</h1>
+        <div id="s2-orbit-ring"></div>
+      </div>
+
+      <!-- Big 33 badge -->
+      <div id="s2-number-badge">
+        <span id="s2-num-33">33</span>
+        <span id="s2-num-label">Years of Wonder</span>
+      </div>
+
+      <!-- Three trait badges -->
+      <div id="s2-badges">
+        <div class="s2-badge" id="s2-badge-1">🌟 Dreamer</div>
+        <div class="s2-badge" id="s2-badge-2">💪 Fighter</div>
+        <div class="s2-badge" id="s2-badge-3">💜 Legend</div>
+      </div>
+
+      <!-- Subtitle -->
+      <p id="s2-subtitle">A celebration for someone truly extraordinary.</p>
+      <div id="s2-beam"></div>
+
+      <!-- Pulsing heartbeat line -->
+      <div id="s2-heartbeat-wrap">
+        <svg id="s2-heartbeat-svg" viewBox="0 0 400 60" preserveAspectRatio="none">
+          <polyline id="s2-hb-line"
+            points="0,30 60,30 80,5 100,55 120,30 160,30 180,10 200,50 220,30 260,30 270,15 280,45 290,30 400,30" />
+        </svg>
+      </div>
+
+      <!-- Closing tagline -->
+      <p id="s2-tagline">"The world is brighter because you are in it."</p>
+
+    </div>
+
+    <button class="recap-btn" data-scene="2" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ══════════════════════ SCENE 3 — The Quiet Magic 🕯️ ══════════════════════ -->
+  <section id="scene-3">
+    <canvas id="balloon-canvas"></canvas>
+    <canvas id="soft-confetti-canvas"></canvas>
+    <div id="scene-3-content">
+      <div id="cake-wrapper">
+        <canvas id="cake-canvas"></canvas>
+      </div>
+      <div id="s3-text-group">
+        <p id="s3-text-1">33 candles glowing with a thousand memories…</p>
+        <p id="s3-text-2">33 years of sharing your beautiful light with the world. 💜</p>
+      </div>
+      <button id="s3-wish-prompt">Close your eyes, offer a silent prayer… and blow out the light. ✨</button>
+      <p id="s3-wish-text">The universe honors your heart. Your dreams are taking flight. 🕯️</p>
+      <!-- Continue to Scene 4 -->
+      <button id="s3-next-btn">
+        <span>Continue the journey</span>
+        <svg viewBox="0 0 24 24" width="18" height="18">
+          <path d="M12 4L12 20M5 13L12 20L19 13" stroke="currentColor" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+    <button class="recap-btn" data-scene="3" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ══════════════════════ SCENE 4 — The Journey Begins ══════════════════════ -->
+  <section id="scene-4">
+    <canvas id="s4-particle-canvas"></canvas>
+    <div id="s4-text-area">
+      <p id="s4-t1">"Every celebration has a reason…"</p>
+      <p id="s4-t2">"And behind every birthday…<br>there is a story worth telling."</p>
+      <p id="s4-t3">"A story of dreams… sacrifices…<br>and incredible strength."</p>
+    </div>
+    <div id="s4-journey-area">
+      <p id="s4-t-final">And your journey begins here…</p>
+      <div id="s4-timeline-wrapper">
+        <div id="s4-row-top" class="s4-label-row"></div>
+        <div id="s4-timeline-track"></div>
+        <div id="s4-row-bottom" class="s4-label-row"></div>
+      </div>
+      <div id="s4-next-trigger" class="next-scene-btn" data-target="scene-5">
+        <span>Go to Your Story</span>
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+        </svg>
+      </div>
+    </div>
+    <button class="recap-btn" data-scene="4" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ══════════════════════ SCENE 5 — The Early Years ══════════════════════ -->
+  <section id="scene-5" class="memory-vault-scene">
+    <div class="s5-narrative">
+      <p>Long before the world saw who you would become…</p>
+      <p>every laugh, every lesson, and every late night was quietly shaping you.</p>
+    </div>
+
+    <canvas id="s5-particle-canvas"></canvas>
+    <div id="s5-soul-container" class="s5-soul-container"></div>
+
+    <p id="s5-finale-retro" class="s5-finale">"Those years didn't just pass — they built you." ✨</p>
+
+    <div class="next-scene-btn s5-to-s6" data-target="scene-6">
+      <span>Continue the Story →</span>
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+      </svg>
+    </div>
+
+    <button class="recap-btn" data-scene="5" title="Replay">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ══════════════════════ SCENE 6 — A New Chapter 💍 ══════════════════════ -->
+  <section id="scene-6">
+    <canvas id="s6-embers-canvas"></canvas>
+    <canvas id="s6-mandala-canvas"></canvas>
+
+    <div id="s6-ring-wrap">
+      <div id="s6-ring-icon">💍</div>
+      <div id="s6-ring-glow"></div>
+    </div>
+
+    <div id="s6-text-area">
+      <p id="s6-t1">"As life moved forward…"</p>
+      <p id="s6-t2">a new chapter began."</p>
+
+      <div id="s6-divider"></div>
+
+      <p id="s6-t3">"You chose to say yes to marriage…"</p>
+      <p id="s6-t4">for the happiness of your family."</p>
+
+      <div id="s6-pause-space"></div>
+
+      <p id="s6-t5">"At a time when big dreams were waiting…"</p>
+
+      <p id="s6-t6" class="s6-highlight">
+        <span id="s6-mnc-shine"></span>
+        "Even opportunities from MNC companies."
+      </p>
+
+      <div id="s6-pause-space-2"></div>
+
+      <p id="s6-t7">"But sometimes…"</p>
+      <p id="s6-t8">love and family come first." 🌸</p>
+    </div>
+
+    <div id="s6-family-wrap">
+      <div id="s6-family-icon">👨‍👩‍👧‍👧</div>
+      <p id="s6-family-caption">The family you chose. The love you never regretted.</p>
+    </div>
+
+    <div id="s6-timeline-glow"></div>
+
+    <div id="s6-next-trigger" class="next-scene-btn" data-target="scene-8">
+      <span>Your comeback story begins →</span>
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+      </svg>
+    </div>
+
+    <button class="recap-btn" data-scene="6" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═══════════ SCENE 8 — The Brave Comeback 💜 ═══════════ -->
+  <section id="scene-8">
+    <div class="s8-grain-overlay"></div>
+    <div id="s8-dark-overlay"></div>
+    <canvas id="s8-spark-canvas"></canvas>
+
+    <div id="s8-main-container">
+      <!-- Consolidate 1: Years + The Dream -->
+      <div class="s8-block" id="s8-block-1">
+        <p id="s8-t-years" class="s8-line s8-whisper">"Years passed…"</p>
+        <div id="s8-calendar-strip">
+          <span id="s8-yr-2015" class="s8-year">2015</span>
+          <span id="s8-yr-2016" class="s8-year">2016</span>
+          <span id="s8-yr-2017" class="s8-year">2017</span>
+          <span id="s8-yr-2018" class="s8-year">2018</span>
+          <span id="s8-yr-2019" class="s8-year">2019</span>
+          <span id="s8-yr-2020" class="s8-year">2020</span>
+          <span id="s8-yr-2021" class="s8-year">2021</span>
+          <span id="s8-yr-2022" class="s8-year">2022</span>
+          <span id="s8-yr-2023" class="s8-year">2023</span>
+          <span id="s8-yr-2024" class="s8-year">2024</span>
+        </div>
+        <p id="s8-t-dream1" class="s8-line">"But somewhere inside… the dream was alive."</p>
+      </div>
+
+      <!-- Consolidate 2: The Decision + Full Stack -->
+      <div class="s8-block" id="s8-block-2">
+        <p id="s8-t-turn" class="s8-line s8-accent">"Now… it was your turn."</p>
+        <p id="s8-t-courage" class="s8-line">"With silent courage, you made a choice."</p>
+        <div id="s8-laptop-glow">💻</div>
+        <p id="s8-t-fullstack" class="s8-line s8-gold">“You would master Full Stack.”</p>
+      </div>
+
+      <!-- Consolidate 3: Final Triumph -->
+      <div class="s8-block" id="s8-block-3">
+        <h2 id="s8-t-nevergaveup" class="s8-line s8-triumph">"But you never gave up." 💜</h2>
+        <div id="s8-timeline-container">
+          <div id="s8-timeline-arc">
+            <svg id="s8-arc-svg" viewBox="0 0 500 100" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="s8-arc-grad" x1="0%" x2="100%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="100%" stop-color="#a78bfa" />
+                </linearGradient>
+              </defs>
+              <path id="s8-arc-path" d="M 100 80 Q 250 10 400 80" fill="none" stroke="url(#s8-arc-grad)"
+                stroke-width="2" />
+              <text x="100" y="98" text-anchor="middle" fill="#fbbf24" font-size="12">2015</text>
+              <text x="400" y="98" text-anchor="middle" fill="#a78bfa" font-size="12">2025</text>
+            </svg>
+          </div>
+        </div>
+
+        <div id="s8-next-trigger" class="next-scene-btn" data-target="scene-10">
+          <span>Your triumph awaits →</span>
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <button class="recap-btn" data-scene="8" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═════════ SCENE 10 — The Course Completion 🎓 ═════════ -->
+  <section id="scene-10">
+    <!-- Spark canvas -->
+    <canvas id="s10-spark-canvas"></canvas>
+
+    <!-- Timeline glow bar at the top -->
+    <div id="s10-timeline-track-wrap">
+      <div id="s10-timeline-glow-pulse"></div>
+      <div id="s10-timeline-bar"></div>
+      <div class="s10-milestone" style="left:0%">💡</div>
+      <div class="s10-milestone" style="left:25%">📚</div>
+      <div class="s10-milestone" style="left:50%">💻</div>
+      <div class="s10-milestone" style="left:75%">🌐</div>
+      <div class="s10-milestone" style="left:100%">🎓</div>
+    </div>
+
+    <!-- Content area -->
+    <div id="s10-main-content">
+      <!-- ACT 2: Step by step text -->
+      <p id="s10-t-step" class="s10-line s10-whisper">"Step by step…</p>
+      <p id="s10-t-day" class="s10-line s10-whisper">day by day…"</p>
+
+      <!-- ACT 3: Certificate visual -->
+      <div id="s10-cert-area">
+        <div id="s10-cert-glow"></div>
+        <div id="s10-cert-wrap">
+          <div id="s10-cert-inner">
+            <div class="s10-cert-ribbon">🎓</div>
+            <div class="s10-cert-border-outer">
+              <div class="s10-cert-border-inner">
+                <p class="s10-cert-label">Certificate of Completion</p>
+                <div class="s10-cert-divider"></div>
+                <p class="s10-cert-name">Bharathi</p>
+                <p class="s10-cert-course">Full Stack Development</p>
+                <div class="s10-cert-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+                <div class="s10-cert-seal">✦</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACT 4: Hard work line -->
+      <p id="s10-t-hardwork" class="s10-line">"You pushed forward with hard work."</p>
+
+      <!-- ACT 7: Journey not over -->
+      <p id="s10-t-notover" class="s10-line s10-dramatic">"But the journey was still not over."</p>
+
+      <!-- Confetti container -->
+      <div id="s10-confetti-container"></div>
+
+      <!-- Next trigger to scene 11 -->
+      <div id="s10-next-trigger" class="next-scene-btn" data-target="scene-11">
+        <span>The Challenge Ahead →</span>
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+        </svg>
+      </div>
+    </div>
+
+    <button class="recap-btn" data-scene="10" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═════════ SCENE 11 — The Challenges 🚫 ═════════ -->
+  <section id="scene-11">
+    <canvas id="s11-rejection-canvas"></canvas>
+
+    <div id="s11-main-content">
+      <div class="s11-narrative">
+        <p id="s11-t1" class="s11-line">“You started applying to companies…”</p>
+      </div>
+
+      <div id="s11-icons-container">
+        <div class="s11-icon-wrap">🏢<div class="s11-stamp">REJECTED</div>
+        </div>
+        <div class="s11-icon-wrap">📄<div class="s11-stamp">NO</div>
+        </div>
+        <div class="s11-icon-wrap">💼<div class="s11-stamp">REJECTED</div>
+        </div>
+        <div class="s11-icon-wrap">🏢<div class="s11-stamp">NO</div>
+        </div>
+      </div>
+
+      <div class="s11-narrative">
+        <p id="s11-t2" class="s11-line">“But many doors didn’t open.”</p>
+        <p id="s11-t3" class="s11-line s11-heavy">“Career gap…”</p>
+        <p id="s11-t4" class="s11-line">became the reason for many rejections.</p>
+      </div>
+
+      <div class="s11-narrative s11-hope">
+        <p id="s11-t5" class="s11-line s11-accent">“But you refused to lose hope.”</p>
+        <h2 id="s11-t-final" class="s11-final">“You kept trying… again and again.”</h2>
+        <p id="s11-t-never" class="s11-line s11-final-reveal">"But you never gave up." 💜</p>
+      </div>
+
+      <div id="s11-final-trigger-wrap" class="s11-page-break">
+        <div id="s11-btn-next" class="s11-next-btn">
+          <span>The Breakthrough Awaits 💼</span>
+          <div class="s11-btn-glow"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="recap-btn" data-scene="11" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═════════ SCENE 13 — The Breakthrough 💼 ═════════ -->
+  <section id="scene-13">
+    <canvas id="s13-canvas"></canvas>
+    <div id="s13-purple-glow"></div>
+
+    <!-- Timeline track -->
+    <div id="s13-timeline-track">
+      <div id="s13-tl-line"></div>
+      <div class="s13-tl-dot" id="s13-dot-1">
+        <span class="s13-dot-icon">📅</span>
+        <span class="s13-dot-label">Mar 21, 2025</span>
+      </div>
+      <div class="s13-tl-dot" id="s13-dot-2">
+        <span class="s13-dot-icon">💼</span>
+        <span class="s13-dot-label">Intern</span>
+      </div>
+      <div class="s13-tl-dot" id="s13-dot-3">
+        <span class="s13-dot-icon">💻</span>
+        <span class="s13-dot-label">Jr. Developer</span>
+      </div>
+      <div class="s13-tl-dot" id="s13-dot-4">
+        <span class="s13-dot-icon">👩‍💻</span>
+        <span class="s13-dot-label">Team Lead</span>
+      </div>
+    </div>
+
+    <!-- Main scrolling story -->
+    <div id="s13-main">
+
+      <!-- ACT 1: The Date -->
+      <div class="s13-block">
+        <div id="s13-date-badge">📅 March 21, 2025</div>
+        <p id="s13-t1" class="s13-line s13-whisper">"After years of determination…</p>
+        <p id="s13-t2" class="s13-line s13-whisper">the moment finally arrived."</p>
+      </div>
+
+      <!-- ACT 2: Intern -->
+      <div class="s13-block">
+        <div id="s13-role-1" class="s13-role-badge">
+          <span class="s13-role-icon">💼</span>
+          <span>Intern</span>
+        </div>
+        <p id="s13-t3" class="s13-line">"You began your professional journey as an Intern."</p>
+        <p id="s13-t4" class="s13-line s13-sub">"With dedication, passion, and continuous learning…"</p>
+        <p id="s13-t5" class="s13-line s13-accent">"You quickly proved your abilities."</p>
+      </div>
+
+      <!-- ACT 3: Junior Developer -->
+      <div class="s13-block">
+        <div id="s13-role-2" class="s13-role-badge s13-role-dev">
+          <span class="s13-role-icon">💻</span>
+          <span>Junior Software Developer</span>
+        </div>
+        <p id="s13-t6" class="s13-line">"Your hard work turned opportunities into achievements."</p>
+      </div>
+
+      <!-- ACT 4: Team Lead -->
+      <div class="s13-block">
+        <div id="s13-role-3" class="s13-role-badge s13-role-lead">
+          <span class="s13-role-icon">👩‍💻</span>
+          <span>Leading &amp; Guiding the Team</span>
+        </div>
+        <p id="s13-t7" class="s13-line">"Within a year, you grew from an Intern</p>
+        <p id="s13-t8" class="s13-line">to a confident professional who now leads and guides others."</p>
+        <p id="s13-t9" class="s13-line s13-sub">"Your journey in the company continues to grow stronger every day."</p>
+      </div>
+
+      <!-- ACT 5: Balance -->
+      <div class="s13-block">
+        <div id="s13-balance-grid">
+          <div class="s13-balance-item" id="s13-b1">👨‍👩‍👧‍👧 Family</div>
+          <div class="s13-balance-item" id="s13-b2">👶👶 Raising Children</div>
+          <div class="s13-balance-item" id="s13-b3">🏠 Home</div>
+          <div class="s13-balance-item" id="s13-b4">💻 Career</div>
+        </div>
+        <p id="s13-t10" class="s13-line s13-sub">"Balancing all of it… every single day."</p>
+      </div>
+
+      <!-- ACT 6: Final message -->
+      <div class="s13-block s13-final-block">
+        <h2 id="s13-t-strength" class="s13-strength">
+          💜 That is not just success…<br>
+          <span>that is true strength.</span>
+        </h2>
+        <div id="s13-finale-btn-wrap" class="s13-page-break">
+          <div id="s13-btn-finale" class="s13-next-btn">
+            <span>The Grand Finale ✨</span>
+            <div class="s13-btn-glow"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="recap-btn" data-scene="13" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═════════ SCENE 14 — The Grand Finale ✨ ═════════ -->
+  <section id="scene-14">
+    <canvas id="s14-fireworks-canvas"></canvas>
+    <canvas id="s14-stars-canvas"></canvas>
+    <div id="s14-glow-orb-1" class="s14-glow-orb"></div>
+    <div id="s14-glow-orb-2" class="s14-glow-orb"></div>
+    <div id="s14-glow-orb-3" class="s14-glow-orb"></div>
+
+    <div id="s14-content">
+
+      <!-- Inspiration title -->
+      <div id="s14-inspiration-wrap">
+        <p id="s14-you-are" class="s14-label">You are our</p>
+        <h1 id="s14-title">Inspiration</h1>
+        <div id="s14-title-underline"></div>
+      </div>
+
+      <!-- Pillars of strength -->
+      <div id="s14-pillars">
+        <div class="s14-pillar" id="s14-p1">
+          <div class="s14-pillar-icon">🌟</div>
+          <div class="s14-pillar-text">Dreamer</div>
+        </div>
+        <div class="s14-pillar" id="s14-p2">
+          <div class="s14-pillar-icon">💪</div>
+          <div class="s14-pillar-text">Fighter</div>
+        </div>
+        <div class="s14-pillar" id="s14-p3">
+          <div class="s14-pillar-icon">💜</div>
+          <div class="s14-pillar-text">Family Lover</div>
+        </div>
+        <div class="s14-pillar" id="s14-p4">
+          <div class="s14-pillar-icon">👩‍💻</div>
+          <div class="s14-pillar-text">Leader</div>
+        </div>
+      </div>
+
+      <!-- Quote -->
+      <div id="s14-quote-wrap">
+        <p id="s14-quote-line1" class="s14-quote-line">"You proved that age is just a number…</p>
+        <p id="s14-quote-line2" class="s14-quote-line">and it's never too late to chase the life you deserve."</p>
+        <p id="s14-quote-attr" class="s14-quote-attr">— Your story. Your strength.</p>
+      </div>
+
+      <!-- Birthday -->
+      <div id="s14-bday-wrap">
+        <div id="s14-bday-cake">🎂</div>
+        <div id="s14-bday-number">33</div>
+        <h2 id="s14-bday-text">Happy Birthday,<br><span id="s14-name">Bharathi Akka</span> 💜</h2>
+        <p id="s14-bday-sub">May every year ahead be as extraordinary<br>as the woman you have become.</p>
+      </div>
+
+      <!-- Floating hearts -->
+      <div id="s14-hearts-container"></div>
+
+      <!-- Final closing line -->
+      <p id="s14-closing">Keep shining. The world needs your light. 💜</p>
+
+    </div>
+
+    <button class="recap-btn" data-scene="14" title="Replay Scene">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+      </svg>
+    </button>
+  </section>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
