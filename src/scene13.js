@@ -19,7 +19,8 @@ class BreakthroughCanvas {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         this.c.width = this.W * dpr;
@@ -27,7 +28,8 @@ class BreakthroughCanvas {
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         this.particles = [];
 
-        for (let i = 0; i < 70; i++) {
+        const count = isMobile ? 30 : 70;
+        for (let i = 0; i < count; i++) {
             this.particles.push({
                 x: Math.random() * this.W,
                 y: Math.random() * this.H,

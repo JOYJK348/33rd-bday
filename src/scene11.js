@@ -32,7 +32,8 @@ class CinematicCanvas {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         this.c.width = this.W * dpr;
@@ -45,12 +46,14 @@ class CinematicCanvas {
         this.pulses = [];
 
         // Falling rejection letter particles
-        for (let i = 0; i < 28; i++) {
+        const letterCount = isMobile ? 12 : 28;
+        for (let i = 0; i < letterCount; i++) {
             this._spawnLetter(true);
         }
 
         // Rising gold sparks (start invisible, brighten in resilience phase)
-        for (let i = 0; i < 50; i++) {
+        const sparkCount = isMobile ? 25 : 50;
+        for (let i = 0; i < sparkCount; i++) {
             this._spawnSpark(true);
         }
     }

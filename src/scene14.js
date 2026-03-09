@@ -25,7 +25,8 @@ class FireworksCanvas {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         this.c.width = this.W * dpr;
@@ -38,7 +39,8 @@ class FireworksCanvas {
         const targetY = this.H * (0.1 + Math.random() * 0.45);
         const hue = Math.random() * 360;
         const particles = [];
-        const count = 60 + Math.floor(Math.random() * 50);
+        const isMobile = window.innerWidth < 768;
+        const count = isMobile ? 35 : (60 + Math.floor(Math.random() * 50));
 
         for (let i = 0; i < count; i++) {
             const angle = (i / count) * Math.PI * 2;
@@ -138,14 +140,16 @@ class StarsCanvas {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         this.c.width = this.W * dpr;
         this.c.height = this.H * dpr;
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        for (let i = 0; i < 120; i++) {
+        const count = isMobile ? 50 : 120;
+        for (let i = 0; i < count; i++) {
             this.stars.push({
                 x: Math.random() * this.W,
                 y: Math.random() * this.H,

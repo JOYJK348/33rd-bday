@@ -57,18 +57,13 @@ body.scroll-enabled {
 
 /* ---------- Nebula Overlay ---------- */
 #nebula-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 15% 50%, rgba(107, 33, 168, 0.2) 0%, transparent 70%),
-    radial-gradient(ellipse 70% 50% at 85% 15%, rgba(75, 0, 130, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 90% 70% at 50% 90%, rgba(25, 25, 112, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 60% 40%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
-  animation: nebulaPulse 10s ease-in-out infinite alternate;
+  display: none !important;
 }
+
+#shooting-stars {
+  display: none !important;
+}
+
 
 @keyframes nebulaPulse {
   0% {
@@ -125,24 +120,12 @@ body.scroll-enabled {
 }
 
 /* ---------- Burst Bloom (centered, NOT full-screen) ---------- */
-#burst-overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 500px;
-  height: 500px;
-  margin: -250px 0 0 -250px;
-  z-index: 15;
-  pointer-events: none;
-  opacity: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(192, 132, 252, 0.7) 20%,
-      rgba(124, 58, 237, 0.3) 45%,
-      transparent 70%);
-  transform: scale(0.2);
+#burst-overlay,
+#burst-ring,
+#lens-flare {
+  display: none !important;
 }
+
 
 /* ---------- Burst Ring (shockwave ripple) ---------- */
 #burst-ring {
@@ -4215,5 +4198,45 @@ body.scroll-enabled {
 
   #s2-name {
     font-size: 1.9rem;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   MOBILE PERFORMANCE OPTIMIZATIONS (Surgical)
+   ══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Backdrop filters and blurs are extremely heavy on mobile GPUs */
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+  }
+
+
+  /* Simplify semi-transparent backgrounds to replace the blur effect */
+  .s5-milestone-card,
+  .recap-btn,
+  .s4-mobile-cell,
+  #s11-btn-next,
+  #s13-btn-finale,
+  #s14-btn-recap {
+    background: rgba(18, 18, 30, 0.95) !important;
+  }
+
+  /* Complex text shadows are expensive to paint */
+  #s14-title,
+  #s2-name,
+  .s5-milestone-title,
+  #s11-t-final,
+  #s11-t-never,
+  #s13-title,
+  #s14-closing {
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  /* Reduce transition duration for immediate feel on mobile */
+  * {
+    transition-duration: 0.2s !important;
   }
 }

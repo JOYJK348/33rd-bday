@@ -87,7 +87,9 @@ export default class Galaxy {
         );
         this.camera.position.z = 5;
 
-        this.pr = Math.min(window.devicePixelRatio, 2);
+        // Mobile performance check
+        const isMobile = window.innerWidth < 768;
+        this.pr = isMobile ? Math.min(window.devicePixelRatio, 1.25) : Math.min(window.devicePixelRatio, 2);
         const pr = this.pr;
         this.renderer = new THREE.WebGLRenderer({
             antialias: false,
@@ -126,9 +128,10 @@ export default class Galaxy {
          *  - zSpeed: how fast they drift toward camera (per second)
          *  - color, count, sizes
          */
+        const isMobile = window.innerWidth < 768;
         const configs = [
             {
-                count: 500,
+                count: isMobile ? 300 : 500,
                 minSize: 1.0, maxSize: 2.2,
                 spread: 120, depth: 200,
                 color: 0xa08cc8,
@@ -136,7 +139,7 @@ export default class Galaxy {
                 parallaxMult: 0.3,
             },
             {
-                count: 280,
+                count: isMobile ? 180 : 280,
                 minSize: 1.8, maxSize: 3.5,
                 spread: 70, depth: 120,
                 color: 0xc8a0f0,
@@ -144,7 +147,7 @@ export default class Galaxy {
                 parallaxMult: 1.0,
             },
             {
-                count: 100,
+                count: isMobile ? 60 : 100,
                 minSize: 2.5, maxSize: 5.5,
                 spread: 40, depth: 50,
                 color: 0xf0e0ff,
@@ -273,6 +276,14 @@ export default class Galaxy {
     _animate() {
         if (this.disposed) return;
         requestAnimationFrame(() => this._animate());
+
+        // Performance: Cap mobile background at 30fps to save GPU for overlays
+        const isMobile = window.innerWidth < 768;
+        const now = performance.now();
+        if (isMobile) {
+            if (this._lastFrameTime && now - this._lastFrameTime < 33) return;
+            this._lastFrameTime = now;
+        }
 
         const elapsed = this.clock.getElapsedTime();
         const delta = this.clock.getDelta ? this.clock.getDelta() : 0.016;

@@ -387,11 +387,13 @@ export default class Scene1 {
             onComplete: () => document.body.classList.add('scroll-enabled'),
         }, '+=0.5');
 
-        // Ambient shooting stars
+        // Ambient shooting stars - REMOVED for cleaner background
+        /*
         const shootingInterval = setInterval(() => {
             if (!document.hidden) spawnShootingStar();
         }, 4000 + Math.random() * 3000);
         window.addEventListener('beforeunload', () => clearInterval(shootingInterval));
+        */
 
         this.tl = tl;
     }
@@ -449,11 +451,13 @@ export default class Scene1 {
         // Unlock scroll immediately
         document.body.classList.add('scroll-enabled');
 
-        // Ambient shooting stars still run
+        // Ambient shooting stars - REMOVED
+        /*
         const shootingInterval = setInterval(() => {
             if (!document.hidden) spawnShootingStar();
         }, 4000 + Math.random() * 3000);
         window.addEventListener('beforeunload', () => clearInterval(shootingInterval));
+        */
     }
 
     /**

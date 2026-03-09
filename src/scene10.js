@@ -20,7 +20,8 @@ class SparkleCanvas {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         this.c.width = this.W * dpr;
@@ -32,7 +33,8 @@ class SparkleCanvas {
         this.certificates = [];
 
         // Floating sparkle dots
-        for (let i = 0; i < 60; i++) {
+        const sparkleCount = isMobile ? 30 : 60;
+        for (let i = 0; i < sparkleCount; i++) {
             this.particles.push({
                 x: Math.random() * this.W,
                 y: Math.random() * this.H,
@@ -46,7 +48,8 @@ class SparkleCanvas {
 
         // Timeline glow orbs
         this.orbs = [];
-        for (let i = 0; i < 5; i++) {
+        const orbCount = isMobile ? 3 : 5;
+        for (let i = 0; i < orbCount; i++) {
             this.orbs.push({
                 x: (this.W / 6) * (i + 0.5),
                 y: this.H * 0.82,

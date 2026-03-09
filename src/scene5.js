@@ -59,11 +59,14 @@ class CalmParticles {
         this.c = canvas; this.ctx = canvas.getContext('2d'); this.dots = [];
     }
     start() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         const W = this.W = window.innerWidth, H = this.H = window.innerHeight;
         this.c.width = W * dpr; this.c.height = H * dpr;
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        for (let i = 0; i < 45; i++) this.dots.push({
+
+        const count = isMobile ? 15 : 45;
+        for (let i = 0; i < count; i++) this.dots.push({
             x: Math.random() * W, y: Math.random() * H,
             r: 0.6 + Math.random() * 1.5,
             vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,

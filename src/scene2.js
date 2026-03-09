@@ -56,8 +56,8 @@ class Firework {
             this.x = W * (0.08 + Math.random() * 0.84);
             this.y = H * (yBands[layer][0] + Math.random() * (yBands[layer][1] - yBands[layer][0]));
         }
-        this.hue = MIX[Math.floor(Math.random() * MIX.length)];
-        const cnt = [40, 70, 100][layer];
+        const isMobile = window.innerWidth < 768;
+        const cnt = isMobile ? [20, 35, 50][layer] : [40, 70, 100][layer];
         const spd = [3, 5, 7.5][layer];
 
         this.particles = Array.from({ length: cnt }, (_, i) => {
@@ -71,7 +71,7 @@ class Firework {
                 size: 1.5 + Math.random() * (layer * 1.5 + 1.5),
                 trail: [],
                 hue: this.hue + (Math.random() - 0.5) * 40,
-                shape: type < 0.35 ? 'circle' : type < 0.6 ? 'star' : type < 0.8 ? 'heart' : 'circle'
+                shape: isMobile ? 'circle' : (type < 0.35 ? 'circle' : type < 0.6 ? 'star' : type < 0.8 ? 'heart' : 'circle')
             };
         });
 
@@ -91,13 +91,17 @@ class Firework {
     }
 
     update(dt) {
+        const isMobile = window.innerWidth < 768;
         const g = [25, 50, 80][this.layer];
         const drag = 0.975;
         const decay = [0.28, 0.48, 0.62][this.layer];
 
         this.particles.forEach(p => {
-            p.trail.push({ x: p.x, y: p.y });
-            if (p.trail.length > 10) p.trail.shift();
+            const maxTrail = isMobile ? 0 : 10;
+            if (maxTrail > 0) {
+                p.trail.push({ x: p.x, y: p.y });
+                if (p.trail.length > maxTrail) p.trail.shift();
+            }
             p.vx *= drag; p.vy *= drag; p.vy += g * dt;
             p.x += p.vx * dt * 60; p.y += p.vy * dt * 60;
             p.life -= decay * dt;
@@ -116,16 +120,21 @@ class Firework {
 
     draw(ctx) {
         this.particles.forEach(p => {
-            // Draw trail
-            p.trail.forEach((tp, ti) => {
-                ctx.globalAlpha = (ti / p.trail.length) * p.life * 0.5;
-                ctx.fillStyle = `hsl(${p.hue},90%,72%)`;
-                ctx.beginPath(); ctx.arc(tp.x, tp.y, p.size * 0.35, 0, Math.PI * 2); ctx.fill();
-            });
+            // Draw trail - disabled on mobile
+            if (p.trail && p.trail.length > 0) {
+                p.trail.forEach((tp, ti) => {
+                    ctx.globalAlpha = (ti / p.trail.length) * p.life * 0.5;
+                    ctx.fillStyle = `hsl(${p.hue},90%,72%)`;
+                    ctx.beginPath(); ctx.arc(tp.x, tp.y, p.size * 0.35, 0, Math.PI * 2); ctx.fill();
+                });
+            }
 
             ctx.globalAlpha = p.life;
-            ctx.shadowColor = `hsl(${p.hue},100%,65%)`;
-            ctx.shadowBlur = 10;
+            const isMobile = window.innerWidth < 768;
+            if (!isMobile) {
+                ctx.shadowColor = `hsl(${p.hue},100%,65%)`;
+                ctx.shadowBlur = 10;
+            }
             ctx.fillStyle = `hsl(${p.hue},95%,82%)`;
 
             if (p.shape === 'star') {
@@ -138,10 +147,13 @@ class Firework {
         });
 
         // Sparkle ring
+        const isMobile = window.innerWidth < 768;
         this.sparkles.forEach(s => {
             ctx.globalAlpha = s.life;
-            ctx.shadowColor = `hsl(${s.hue},100%,75%)`;
-            ctx.shadowBlur = 8;
+            if (!isMobile) {
+                ctx.shadowColor = `hsl(${s.hue},100%,75%)`;
+                ctx.shadowBlur = 8;
+            }
             ctx.fillStyle = `hsl(${s.hue},100%,90%)`;
             drawStar(ctx, s.x, s.y, s.size, 4);
         });
@@ -155,6 +167,7 @@ class Firework {
    ══════════════════════════════════════════════════ */
 class Confetti {
     constructor(cx, cy, burst = false) {
+        const isMobile = window.innerWidth < 768;
         const a = Math.random() * Math.PI * 2;
         const spd = burst ? (10 + Math.random() * 22) : (5 + Math.random() * 14);
         const r = Math.random();
@@ -165,12 +178,12 @@ class Confetti {
         const lig = 60 + Math.random() * 20;
         this.x = cx; this.y = cy;
         this.vx = Math.cos(a) * spd; this.vy = Math.sin(a) * spd - (burst ? 14 : 9);
-        this.size = 4 + Math.random() * 7;
+        this.size = isMobile ? (2 + Math.random() * 4) : (4 + Math.random() * 7);
         this.rot = Math.random() * Math.PI * 2;
         this.rotSpd = (Math.random() - 0.5) * 10;
         const t = Math.random();
-        this.heart = t < 0.25;
-        this.star = t > 0.7;
+        this.heart = !isMobile && (t < 0.25);
+        this.star = !isMobile && (t > 0.7);
         this.color = `hsl(${hue},${sat}%,${lig}%)`;
         this.shadow = `hsl(${hue},90%,55%)`;
         this.life = 1; this.trail = [];
@@ -178,21 +191,32 @@ class Confetti {
         this.drag = 0.968;
     }
     update(dt) {
-        this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 7) this.trail.shift();
+        const isMobile = window.innerWidth < 768;
+        const maxTrail = isMobile ? 0 : 7;
+        if (maxTrail > 0) {
+            this.trail.push({ x: this.x, y: this.y });
+            if (this.trail.length > maxTrail) this.trail.shift();
+        }
         this.vx *= this.drag; this.vy *= this.drag;
         this.vy += this.grav * dt;
         this.x += this.vx * dt * 60; this.y += this.vy * dt * 60;
         this.rot += this.rotSpd * dt; this.life -= 0.18 * dt;
     }
     draw(ctx) {
-        this.trail.forEach((tp, ti) => {
-            ctx.globalAlpha = (ti / this.trail.length) * this.life * 0.3;
-            ctx.fillStyle = this.color;
-            ctx.beginPath(); ctx.arc(tp.x, tp.y, this.size * 0.4, 0, Math.PI * 2); ctx.fill();
-        });
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile && this.trail && this.trail.length > 0) {
+            this.trail.forEach((tp, ti) => {
+                ctx.globalAlpha = (ti / this.trail.length) * this.life * 0.3;
+                ctx.fillStyle = this.color;
+                ctx.beginPath(); ctx.arc(tp.x, tp.y, this.size * 0.4, 0, Math.PI * 2); ctx.fill();
+            });
+        }
         ctx.globalAlpha = this.life;
-        ctx.fillStyle = this.color; ctx.shadowColor = this.shadow; ctx.shadowBlur = 8;
+        if (!isMobile) {
+            ctx.shadowColor = this.shadow;
+            ctx.shadowBlur = 8;
+        }
+        ctx.fillStyle = this.color;
         ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rot);
         if (this.heart) drawHeart(ctx, 0, 0, this.size);
         else if (this.star) drawStar(ctx, 0, 0, this.size);
@@ -215,7 +239,8 @@ class CelebSystem {
     }
 
     resize() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth; this.H = window.innerHeight;
         this.canvas.width = this.W * dpr;
         this.canvas.height = this.H * dpr;
@@ -224,6 +249,7 @@ class CelebSystem {
 
     // Massive center burst
     bigBurst() {
+        const isMobile = window.innerWidth < 768;
         const cx = this.W / 2, cy = this.H * 0.42;
         // Center mega firework
         this.fws.push(new Firework(this.W, this.H, 2, { x: cx, y: cy }));
@@ -232,17 +258,22 @@ class CelebSystem {
             this.fws.push(new Firework(this.W, this.H, 1, { x, y: cy * 0.9 }));
         });
         // Confetti explosion
-        for (let i = 0; i < 200; i++) this.conf.push(new Confetti(cx, cy * 1.1, true));
+        const count = isMobile ? 80 : 200;
+        for (let i = 0; i < count; i++) this.conf.push(new Confetti(cx, cy * 1.1, true));
     }
 
     _schedule() {
+        const isMobile = window.innerWidth < 768;
         const s = [];
         // Background layer 0 — slow, sparse
-        for (let i = 0; i < 8; i++) s.push({ t: 2 + i * 2.4 + Math.random() * 1.2, l: 0 });
+        const count0 = isMobile ? 4 : 8;
+        for (let i = 0; i < count0; i++) s.push({ t: 2 + i * 2.4 + Math.random() * 1.2, l: 0 });
         // Mid layer 1
-        for (let i = 0; i < 14; i++) s.push({ t: 0.3 + i * 0.65 + Math.random() * 0.35, l: 1 });
+        const count1 = isMobile ? 7 : 14;
+        for (let i = 0; i < count1; i++) s.push({ t: 0.3 + i * 0.65 + Math.random() * 0.35, l: 1 });
         // Front layer 2 — big, fast
-        for (let i = 0; i < 10; i++) s.push({ t: 0.1 + i * 0.4 + Math.random() * 0.2, l: 2 });
+        const count2 = isMobile ? 5 : 10;
+        for (let i = 0; i < count2; i++) s.push({ t: 0.1 + i * 0.4 + Math.random() * 0.2, l: 2 });
         this._sched = s.sort((a, b) => a.t - b.t);
         this._si = 0; this._elapsed = 0;
     }
@@ -328,7 +359,12 @@ function spawnOrbitStars() {
             el.style.width = `${size}px`; el.style.height = `${size}px`;
             const h = cfg.hue + (Math.random() - 0.5) * 25;
             el.style.background = `hsl(${h},90%,80%)`;
-            el.style.boxShadow = `0 0 ${size * 2.5}px ${size}px hsla(${h},90%,65%,0.7)`;
+            const isMobile = window.innerWidth < 768;
+            if (!isMobile) {
+                el.style.boxShadow = `0 0 ${size * 2.5}px ${size}px hsla(${h},90%,65%,0.7)`;
+            } else {
+                el.style.boxShadow = `0 0 10px hsla(${h},90%,65%,0.5)`;
+            }
             ring.appendChild(el);
         }
     });
@@ -339,9 +375,11 @@ function spawnOrbitStars() {
    ══════════════════════════════════════════════════ */
 function startEmojiRain(container) {
     const emojis = ['🎉', '🎊', '💜', '✨', '🌟', '🎈', '💫', '🎂', '🥳', '🎁', '💎', '🌸'];
+    const isMobile = window.innerWidth < 768;
+    const maxEmojis = isMobile ? 15 : 40;
     let count = 0;
     const spawnOne = () => {
-        if (count > 40) return;
+        if (count > maxEmojis) return;
         count++;
         const el = document.createElement('span');
         el.className = 's2-emoji-float';
@@ -422,10 +460,14 @@ function animateSubtitle(tl) {
         { left: '105%', opacity: 0, duration: wEls.length * 0.26 + 0.4, ease: 'none' },
         '+=0.5'
     );
+    const isMobile = window.innerWidth < 768;
     tl.to(wEls, {
-        opacity: 1, filter: 'blur(0px)',
-        textShadow: '0 0 20px rgba(192,132,252,0.7)',
-        duration: 0.32, stagger: 0.22, ease: 'power1.out'
+        opacity: 1,
+        filter: isMobile ? 'none' : 'blur(0px)',
+        textShadow: isMobile ? '0 2px 10px rgba(0,0,0,0.8)' : '0 0 20px rgba(192,132,252,0.7)',
+        duration: isMobile ? 0.2 : 0.32,
+        stagger: isMobile ? 0.1 : 0.22,
+        ease: 'power1.out'
     }, '<0.1');
 }
 
@@ -458,9 +500,14 @@ export default class Scene2 {
         });
 
         // Three expanding shockwave rings
-        [['#s2-ring-1', 1.2, 'rgba(192,132,252,0.9)'],
-        ['#s2-ring-2', 1.7, 'rgba(255,215,0,0.8)'],
-        ['#s2-ring-3', 2.3, 'rgba(244,114,182,0.7)']].forEach(([id, d, color], i) => {
+        const isMobile = window.innerWidth < 768;
+        const ringConfigs = isMobile ? [['#s2-ring-1', 0.8, 'rgba(192,132,252,0.9)']] : [
+            ['#s2-ring-1', 1.2, 'rgba(192,132,252,0.9)'],
+            ['#s2-ring-2', 1.7, 'rgba(255,215,0,0.8)'],
+            ['#s2-ring-3', 2.3, 'rgba(244,114,182,0.7)']
+        ];
+
+        ringConfigs.forEach(([id, d, color], i) => {
             tl.set(id, { opacity: 1, scale: 0.04, borderColor: color }, '<');
             tl.to(id, { scale: 11, opacity: 0, duration: d, ease: 'power1.out' }, `<${i * 0.08}`);
         });

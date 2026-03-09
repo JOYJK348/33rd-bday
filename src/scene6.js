@@ -29,7 +29,8 @@ class Scene6Canvas {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio, 2);
         this.W = window.innerWidth;
         this.H = window.innerHeight;
         this.c.width = this.W * dpr;
@@ -37,13 +38,16 @@ class Scene6Canvas {
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         // ── Embers (gold, rise)
-        for (let i = 0; i < 55; i++) this.particles.push(this._ember(true));
+        const emberCount = isMobile ? 25 : 55;
+        for (let i = 0; i < emberCount; i++) this.particles.push(this._ember(true));
 
         // ── Petals (pink/rose, drift diagonally)
-        for (let i = 0; i < 30; i++) this.particles.push(this._petal(true));
+        const petalCount = isMobile ? 15 : 30;
+        for (let i = 0; i < petalCount; i++) this.particles.push(this._petal(true));
 
         // ── Bokeh soft orbs (large, very faint)
-        for (let i = 0; i < 15; i++) this.particles.push(this._bokeh(true));
+        const bokehCount = isMobile ? 8 : 15;
+        for (let i = 0; i < bokehCount; i++) this.particles.push(this._bokeh(true));
     }
 
     // ── Ember spec ──
@@ -179,7 +183,8 @@ class MandalaBloom {
     }
 
     init() {
-        const dpr = Math.min(devicePixelRatio, 2);
+        const isMobile = window.innerWidth < 768;
+        const dpr = isMobile ? Math.min(devicePixelRatio, 1.2) : Math.min(devicePixelRatio, 2);
         const s = Math.min(window.innerWidth, window.innerHeight) * 0.55;
         this.c.width = s * dpr;
         this.c.height = s * dpr;
